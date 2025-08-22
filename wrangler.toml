@@ -1,0 +1,15 @@
+name = "mcp-durable-object-repro"
+main = "src/index.ts"
+compatibility_date = "2025-08-01"
+compatibility_flags = [
+    "nodejs_compat",
+    "nodejs_compat_populate_process_env",
+  ]
+
+[[durable_objects.bindings]]
+name = "AGENT_DO"
+class_name = "AgentDurableObject"
+
+[[migrations]]
+tag = "v1"
+new_classes = ["AgentDurableObject"]
