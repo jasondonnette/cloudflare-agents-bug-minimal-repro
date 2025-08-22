@@ -6,11 +6,12 @@
     "deploy": "wrangler deploy"
   },
   "dependencies": {
-    "@openai/agents": "latest"
+    "@openai/agents": "latest",
+    "agents": "^0.0.113"
   },
   "devDependencies": {
-    "@cloudflare/workers-types": "^4.20241127.0",
-    "typescript": "^5.6.0",
-    "wrangler": "^3.0.0"
+    "@cloudflare/workers-types": "^4.20250822.0",
+    "typescript": "^5.9.2",
+    "wrangler": "^4.32.0"
   }
 }

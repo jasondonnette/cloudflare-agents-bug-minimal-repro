@@ -1,12 +1,17 @@
-import { Agent, MCPServerStreamableHttp, run } from "@openai/agents";
-import { DurableObject } from "cloudflare:workers";
+import { Agent, routeAgentRequest } from "agents";
+import type { ExportedHandler } from "@cloudflare/workers-types";
+import {
+  Agent as OpenAIAgent,
+  MCPServerStreamableHttp,
+  run,
+} from "@openai/agents";
 
 export interface Env {
-  AGENT_DO: DurableObjectNamespace;
+  OPENAI_API_KEY: string;
 }
 
-export class AgentDurableObject extends DurableObject {
-  async fetch(request: Request): Promise<Response> {
+export class AgentDurableObject extends Agent<Env> {
+  async onRequest(request: Request): Promise<Response> {
     if (request.method !== "POST") {
       return new Response("Method not allowed", { status: 405 });
     }
@@ -16,28 +21,22 @@ export class AgentDurableObject extends DurableObject {
       name: "test-mcp-server",
     });
 
-    const agent = new Agent({
+    const agent = new OpenAIAgent({
       name: "Test Agent",
       mcpServers: [mcpServer],
     });
 
     const result = await run(agent, "Test the MCP connection");
-    console.log("[Agent] Agent completed:", result.finalOutput);
 
-    return Response.json({ success: true });
+    return Response.json({ result });
   }
 }
 
 export default {
-  async fetch(request: Request, env: Env): Promise<Response> {
-    const url = new URL(request.url);
-
-    if (url.pathname === "/test" && request.method === "POST") {
-      const id = env.AGENT_DO.idFromName("test-agent");
-      const obj = env.AGENT_DO.get(id);
-      return obj.fetch(request);
-    }
-
-    return new Response("Not found", { status: 404 });
+  async fetch(request: Request, env: Env, _ctx: ExecutionContext) {
+    return (
+      (await routeAgentRequest(request, env)) ||
+      new Response("Not found", { status: 404 })
+    );
   },
-};
+} satisfies ExportedHandler<Env>;

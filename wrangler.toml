@@ -1,15 +1,15 @@
 name = "mcp-durable-object-repro"
 main = "src/index.ts"
 compatibility_date = "2025-08-01"
-compatibility_flags = [
-    "nodejs_compat",
-    "nodejs_compat_populate_process_env",
-  ]
+compatibility_flags = "nodejs_compat"
+
+[vars]
+OPENAI_API_KEY = "your-api-key-here"
 
 [[durable_objects.bindings]]
-name = "AGENT_DO"
+name = "AgentDurableObject"
 class_name = "AgentDurableObject"
 
 [[migrations]]
 tag = "v1"
-new_classes = ["AgentDurableObject"]
+new_sqlite_classes = ["AgentDurableObject"]
