@@ -23,7 +23,7 @@ export class AgentDurableObject extends Agent<Env> {
 
     const agent = new OpenAIAgent({
       name: "Test Agent",
-      mcpServers: [mcpServer],
+      mcpServers: [mcpServer], // Comment this out to avoid the error
     });
 
     const result = await run(agent, "Test the MCP connection");
