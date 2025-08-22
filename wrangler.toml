@@ -1,15 +1,15 @@
-name = "mcp-durable-object-repro"
+name = "mcp-workers-bug"
 main = "src/index.ts"
 compatibility_date = "2025-08-01"
-compatibility_flags = "nodejs_compat"
+compatibility_flags = ["nodejs_compat"]
 
 [vars]
 OPENAI_API_KEY = "your-api-key-here"
 
 [[durable_objects.bindings]]
-name = "AgentDurableObject"
-class_name = "AgentDurableObject"
+name = "TestAgent"
+class_name = "TestAgent"
 
 [[migrations]]
 tag = "v1"
-new_sqlite_classes = ["AgentDurableObject"]
+new_sqlite_classes = ["TestAgent"]

@@ -1,15 +1,17 @@
-# MCP DurableObject Reproduction
+# MCP Workers Bug
 
 Minimal reproduction of MCP server error in Cloudflare Workers.
 
 ## Setup
+
 ```bash
 pnpm i
 pnpm dev
-curl -X POST http://localhost:8787/agents/agent-durable-object/test-agent
+curl -X POST http://localhost:${PORT}/agents/test-agent/instance
 ```
 
 ## Error
+
 ```
 Error: Method not implemented.
   at MCPServerStreamableHttp.listTools

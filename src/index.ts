@@ -10,7 +10,7 @@ export interface Env {
   OPENAI_API_KEY: string;
 }
 
-export class AgentDurableObject extends Agent<Env> {
+export class TestAgent extends Agent<Env> {
   async onRequest(request: Request): Promise<Response> {
     if (request.method !== "POST") {
       return new Response("Method not allowed", { status: 405 });
